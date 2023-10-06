@@ -1,0 +1,67 @@
+{
+    "name": "hello-dx",
+    "private": true,
+    "version": "1.0.0",
+    "description": "Example of DX for AppExchange",
+    "scripts": {
+        "debug": "NODE_ENV=debug npm test",
+        "branch:create": "bash ./dx-utils/create_branch.sh",
+        "branch:delete": "bash ./dx-utils/delete_branch.sh",
+        "branch:switch": "bash ./dx-utils/switch_branch.sh",
+        "org:create": "bash ./dx-utils/setup_scratch_org.sh",
+        "org:delete": "bash ./dx-utils/delete_scratch_org.sh",
+        "org:list": "sfdx force:org:list --all",
+        "org:open": "sfdx force:org:open",
+        "org:login:devhub": "bash ./dx-utils/login_devhub.sh",
+        "org:login": "bash ./dx-utils/login.sh",
+        "org:set:default": "bash ./dx-utils/set_default_scratch_org.sh",
+        "labels": "node ./dx-utils/createLabelService.js",
+        "lint": "npm run lint:lwc && npm run lint:aura",
+        "lint:aura": "eslint **/aura/**",
+        "lint:lwc": "eslint **/lwc/**",
+        "mdcoverage": "node ./dx-utils/mdcoverage.js",
+        "mdcleanup": "node ./dx-utils/mdcleanup.js",
+        "test": "npm run test:unit",
+        "test:script": "./dx-utils/run_tests.sh",
+        "test:unit": "sfdx-lwc-jest -- --runInBand --reporters=default --reporters=jest-junit",
+        "test:unit:watch": "sfdx-lwc-jest --watch",
+        "test:unit:debug": "sfdx-lwc-jest --debug",
+        "test:unit:coverage": "sfdx-lwc-jest --coverage",
+        "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+        "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+        "prettier:write": "prettier --write"
+    },
+    "devDependencies": {
+        "@prettier/plugin-xml": "^0.13.0",
+        "@salesforce/eslint-config-lwc": "^1.0.0",
+        "@salesforce/eslint-plugin-aura": "^2.0.0",
+        "@salesforce/sfdx-lwc-jest": "^1.1.0",
+        "axios": "^0.21.1",
+        "chalk": "^4.1.0",
+        "commander": "^7.1.0",
+        "eslint": "^7.15.0",
+        "eslint-config-prettier": "^7.2.0",
+        "husky": "^4.2.1",
+        "jest-junit": "^13.0.0",
+        "lint-staged": "^10.0.7",
+        "object-path": "^0.11.5",
+        "prettier": "^2.0.5",
+        "prettier-plugin-apex": "^1.9.0",
+        "strip-ansi": "^6.0.0",
+        "table": "^6.0.7",
+        "xml-js": "^1.6.11"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [
+            "prettier --write"
+        ],
+        "**/{aura|lwc}/**": [
+            "eslint"
+        ]
+    }
+}

@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>AdminSettingNotSetup</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Admin setting not setup</shortDescription>
+        <value>ArcGIS Map Integration not configured.</value>
+    </labels>
+    <labels>
+        <fullName>Authorization</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Authorization</shortDescription>
+        <value>Authorization</value>
+    </labels>
+    <labels>
+        <fullName>Authorize</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Authorize</shortDescription>
+        <value>Authorize</value>
+    </labels>
+    <labels>
+        <fullName>AuthorizationFailure</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Failed to Authorize</shortDescription>
+        <value>Failed to Authorize</value>
+    </labels>
+    <labels>
+        <fullName>ArcGISAuthentication</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ArcGIS Authentication</shortDescription>
+        <value>ArcGIS Authentication</value>
+    </labels>
+    <labels>
+        <fullName>ArcGISAuthenticationGetStarted</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ArcGIS Authentication Get Started</shortDescription>
+        <value>To get started, let's set up your ArcGIS connection.</value>
+    </labels>
+    <labels>
+        <fullName>ArcGISSettings</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ArcGIS Settings</shortDescription>
+        <value>ArcGIS Settings</value>
+    </labels>
+    <labels>
+        <fullName>ArcGISType_Enterprise</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ArcGISType: Enterprise</shortDescription>
+        <value>ArcGIS Enterprise (On-Premise)</value>
+    </labels>
+    <labels>
+        <fullName>ArcGISType_HelpText</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ArcGISType: HelpText</shortDescription>
+        <value
+        >Choose from ArcGIS Online (Cloud) or ArcGIS Enterprise (On-Premise). ArcGIS Online is hosted on ESRI's servers while Enterprise is hosted on your infrastructure. Ask your ArcGIS Administrator if you are unsure of the organization type.</value>
+    </labels>
+    <labels>
+        <fullName>ArcGISType_Online</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ArcGISType: Online</shortDescription>
+        <value>ArcGIS Online</value>
+    </labels>
+    <labels>
+        <fullName>ArcGISType_Select</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ArcGISType: Select</shortDescription>
+        <value>1. Select ArcGIS Type</value>
+    </labels>
+    <labels>
+        <fullName>Cancel</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>ConnectionType_Select</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Connection Type: Select</shortDescription>
+        <value>2. Select Connection Type</value>
+    </labels>
+    <labels>
+        <fullName>ConnectionType_Application</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Connection Type: Application</shortDescription>
+        <value>As an application</value>
+    </labels>
+    <labels>
+        <fullName>ConnectionType_HelpText</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Connection Type: HelpText</shortDescription>
+        <value
+        >Choosing "as an application" will only provide access to Public Data Layers from your ArcGIS organization. If you wish to grant access to Private Data Layers, we recommend choosing "as a named user."</value>
+    </labels>
+    <labels>
+        <fullName>ConnectionType_NamedUser</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ConnectionType: Named User</shortDescription>
+        <value>As a named user</value>
+    </labels>
+        <labels>
+        <fullName>DAE_BadQuery</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DAE: Bad Query</shortDescription>
+        <value>The supplied SOQL query could not be parsed/validated.</value>
+    </labels>
+    <labels>
+        <fullName>DAE_BadRelationshipName</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DAE: Bad Relationship Name</shortDescription>
+        <value>Subquery through relationship &quot;{0}&quot; does not exist. Bad relationship name?</value>
+    </labels>
+    <labels>
+        <fullName>DAE_FieldDoesNotExist</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DAE: Field Does Not Exist</shortDescription>
+        <value>Field &quot;{0}&quot; on object &quot;{1}&quot; does not exist.</value>
+    </labels>
+    <labels>
+        <fullName>DAE_FieldNotAccessible</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DAE: Field Not Accessible</shortDescription>
+        <value
+        >&quot;{0}&quot; permission to field &quot;{2}&quot; on object &quot;{1}&quot; is not allowed for the current user.</value>
+    </labels>
+    <labels>
+        <fullName>DAE_ObjectNotAccessible</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DAE: Object Not Accessible</shortDescription>
+        <value>&quot;{0}&quot; permission to object &quot;{1}&quot; is not allowed for the current user.</value>
+    </labels>
+    <labels>
+        <fullName>DAE_InvalidExternalId</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DAE: Invalid External Id</shortDescription>
+        <value>Field &quot;{0}&quot; on object &quot;{1}&quot; is not a valid External Id.</value>
+    </labels>
+    <labels>
+        <fullName>DAE_DuplicateRecordForUpsert</fullName>
+        <categories>Exception</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DAE: Duplicate Record For Upsert</shortDescription>
+        <value>Duplicate records with External Id &quot;{0}&quot; were specified in an upsert call.</value>
+    </labels>
+    <labels>
+        <fullName>Edit</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>EnterpriseProvideYourDetails</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Enterprise: Provide Your Details</shortDescription>
+        <value>2. Provide Your Details</value>
+    </labels>
+    <labels>
+        <fullName>EnterpriseURL</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Enterprise: URL</shortDescription>
+        <value>Token Service URL</value>
+    </labels>
+    <labels>
+        <fullName>EnterprisePortalURL</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Enterprise Portal URL</shortDescription>
+        <value>Enterprise Portal URL</value>
+    </labels>
+    <labels>
+        <fullName>Loading</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Loading</shortDescription>
+        <value>Loading</value>
+    </labels>
+    <labels>
+        <fullName>OnlineDetails_ClientID</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Online Details: Client ID</shortDescription>
+        <value>Client ID</value>
+    </labels>
+    <labels>
+        <fullName>OnlineDetails_ClientSecret</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Online Details: Client Secret</shortDescription>
+        <value>Client Secret</value>
+    </labels>
+    <labels>
+        <fullName>OnlineDetails_DescriptionLink</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Online Details: Description</shortDescription>
+        <value>Create an application in ArcGIS</value>
+    </labels>
+    <labels>
+        <fullName>OnlineDetails_DescriptionPart2</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Online Details: Description Part 2</shortDescription>
+        <value>to get your Client ID and Client Secret below.</value>
+    </labels>
+    <labels>
+        <fullName>OnlineDetails_Password</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Online Details: Password</shortDescription>
+        <value>Password</value>
+    </labels>
+    <labels>
+        <fullName>OnlineDetails_ProvideYourDetails</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Online Details: Provide Your Details</shortDescription>
+        <value>3. Provide Your Details</value>
+    </labels>
+    <labels>
+        <fullName>OnlineDetails_Username</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Online Details: Username</shortDescription>
+        <value>Username</value>
+    </labels>
+    <labels>
+        <fullName>OnlineDetails_UserHelp</fullName>
+        <categories>Admin</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Online Details: User Help</shortDescription>
+        <value
+        >We recommend creating an Identity User to perform this authorization. This user will be related to all activity performed by the integration.</value>
+    </labels>
+    <labels>
+        <fullName>Connected</fullName>
+        <categories>Toast</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Connected</shortDescription>
+        <value>Connected</value>
+    </labels>
+    <labels>
+        <fullName>Error</fullName>
+        <categories>Toast</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>ToastError</fullName>
+        <categories>Toast</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ToastError</shortDescription>
+        <value>Error! Please contact your Salesforce Admin.</value>
+    </labels>
+    <labels>
+        <fullName>ToastInfo</fullName>
+        <categories>Toast</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ToastInfo</shortDescription>
+        <value>Info</value>
+    </labels>
+    <labels>
+        <fullName>ToastSuccess</fullName>
+        <categories>Toast</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ToastSuccess</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>ToastWarning</fullName>
+        <categories>Toast</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ToastWarning</shortDescription>
+        <value>Warning</value>
+    </labels>
+    <labels>
+        <fullName>ArcGisComponent_EmptyStateHeading</fullName>
+        <categories>ArcGIS Map Component</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IntegrationnotAuthorized</shortDescription>
+        <value>ArcGIS Integration not Authorized</value>
+    </labels>
+    <labels>
+        <fullName>ArcGisComponent_GenericError</fullName>
+        <categories>ArcGIS Map Component</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>genericerrormessage</shortDescription>
+        <value>Contact your Salesforce Administrator for help.</value>
+    </labels>
+    <labels>
+        <fullName>ArcGisComponent_ItemsSelected</fullName>
+        <categories>ArcGIS Map Component</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Items Selected</shortDescription>
+        <value>Item(s) Selected</value>
+    </labels>
+    <labels>
+        <fullName>New</fullName>
+        <categories>ArcGIS Map Component</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New</shortDescription>
+        <value>New</value>
+    </labels>
+    <labels>
+        <fullName>NoMapConfigured</fullName>
+        <categories>ArcGIS Map Component</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No Map Configured</shortDescription>
+        <value>No ArcGIS Map has been configured</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <categories>ArcGIS Map Component</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>SaveToastMessage</fullName>
+        <categories>ArcGIS Map Component</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save Toast Message</shortDescription>
+        <value>Your Map has been updated.</value>
+    </labels>
+    <labels>
+        <fullName>NoFlowConfigured</fullName>
+        <categories>ArcGIS Map Component</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No Flow Configured</shortDescription>
+        <value>No Flow configured, contact your Salesforce Admin for support.</value>
+    </labels>
+</CustomLabels>

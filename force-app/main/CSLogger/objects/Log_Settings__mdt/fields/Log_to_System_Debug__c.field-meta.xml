@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Log_to_System_Debug__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>All the logs should be sent to System.debug if this field is checked in</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Log to System Debug</label>
+    <type>Checkbox</type>
+</CustomField>

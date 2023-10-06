@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bypass_Platform_Events__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>When True, LogScience will bypass platform events as configured in Log_Settings_mdt</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Bypass Platform Events</label>
+    <type>Checkbox</type>
+</CustomField>

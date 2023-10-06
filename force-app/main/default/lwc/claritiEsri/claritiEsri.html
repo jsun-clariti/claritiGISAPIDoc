@@ -1,0 +1,78 @@
+<template>
+    <div class="slds-card">
+        <template lwc:if={showSpinner}>
+            <lightning-spinner alternative-text={labels.Loading}></lightning-spinner>
+            <iframe height="400px"></iframe>
+        </template>
+        <template lwc:if={authenticationAvailable}>
+            <template lwc:if={metadataNotConfigured}>
+                <c-illustration-setup
+                    heading={setupIllustrationHeading}
+                    detail-message={detailMessage}
+                ></c-illustration-setup>
+            </template>
+            <template lwc:else>
+                <template lwc:if={showScreenFlow}>
+                    <lightning-flow
+                        flow-api-name={flowApiName}
+                        flow-input-variables={flowInputVariables}
+                    ></lightning-flow>
+                </template>
+                <template lwc:else>
+                    <div>
+                        <iframe src={visualforceUrl} width="100%" height="400px"></iframe>
+                    </div>
+                    <template lwc:if={showFooter}>
+                        <template lwc:if={showFooterSpinner}>
+                            <lightning-spinner alternative-text={labels.Loading}></lightning-spinner>
+                        </template>
+                        <div class="footer">
+                            <p class="slds-var-m-right_large slds-text-heading_small slds-text-color_default">
+                                {itemsSelectedText}
+                            </p>
+                            <template lwc:if={showNewBtn}>
+                                <lightning-button
+                                    label={labels.New}
+                                    variant="brand"
+                                    class="slds-text-body_regular slds-var-m-right_medium"
+                                    onclick={handleNewBtnClick}
+                                    disabled={disableNewBtn}
+                                ></lightning-button>
+                            </template>
+                            <template lwc:elseif={showEditFooterBtns}>
+                                <template lwc:if={showCancelSaveBtns}>
+                                    <lightning-button
+                                        label={labels.Cancel}
+                                        variant="neutral"
+                                        class="slds-text-body_regular slds-var-m-right_medium"
+                                        onclick={handleCancelBtnClick}
+                                    ></lightning-button>
+                                    <lightning-button
+                                        label={labels.Save}
+                                        variant="brand"
+                                        class="slds-text-body_regular slds-var-m-right_medium"
+                                        onclick={handleSaveBtnClick}
+                                    ></lightning-button>
+                                </template>
+                                <template lwc:else>
+                                    <lightning-button
+                                        label={labels.Edit}
+                                        variant="brand"
+                                        class="slds-text-body_regular slds-var-m-right_medium"
+                                        onclick={handleEditBtnClick}
+                                        disabled={disableEditBtn}
+                                    ></lightning-button>
+                                </template>
+                            </template>
+                        </div>
+                    </template>
+                </template>
+            </template>
+        </template>
+        <template lwc:else>
+            <template lwc:if={authenticationNotAvailable}>
+                <c-illustration heading={heading} detail-message={detailMessage}></c-illustration>
+            </template>
+        </template>
+    </div>
+</template>

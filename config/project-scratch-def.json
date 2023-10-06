@@ -1,0 +1,19 @@
+{
+    "orgName": "Hello-DX",
+    "edition": "Developer",
+    "features": ["DebugApex", "EnableSetPasswordInApi"],
+    "settings": {
+        "lightningExperienceSettings": {
+            "enableS1DesktopEnabled": true
+        },
+        "mobileSettings": {
+            "enableS1EncryptedStoragePref2": false
+        },
+        "userManagementSettings": {
+            "enableNewProfileUI": true
+        },
+        "chatterSettings": {
+            "enableChatter": true
+        }
+    }
+}

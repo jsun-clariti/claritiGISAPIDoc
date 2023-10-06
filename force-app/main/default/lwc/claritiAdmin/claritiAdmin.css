@@ -1,0 +1,18 @@
+.background {
+    background-color: var(--lwc-colorBackgroundAlt); /* #ffffff */
+}
+
+.textBold {
+    font-weight: bold;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #f4f6f9;
+}
+
+.helpText {
+    position: relative;
+    top: -8px;
+}

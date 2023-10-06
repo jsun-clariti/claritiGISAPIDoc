@@ -1,0 +1,417 @@
+<apex:page controller="EsriMapPageCtrl">
+    <head>
+        <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css" />
+        <script src="https://js.arcgis.com/4.27/"></script>
+        <style>
+            #viewDiv {
+                height: 400px;
+                margin: 0;
+                padding: 0;
+            }
+
+            #measurements {
+                padding: 4px 8px;
+                font-size: 16px;
+                bottom: 15px;
+                left: 50%;
+                margin-right: -50%;
+                transform: translate(-50%, -50%);
+            }
+            .esri-ui-manual-container {
+                top: 15px;
+                left: 62px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="viewDiv"></div>
+        <div id="measurements" class="esri-widget"></div>
+        <script>
+            // VfUnescapeEl false positive: parameters.uuid is system-generated in parent LWC
+            // and does not accept user input
+            let uuid = '{!$CurrentPage.parameters.uuid}';
+            window.onload = function () {
+                let eventObject = {
+                    eventType: 'loadDrawings'
+                };
+                sendMsgToParentLWC(eventObject);
+            };
+            function sendMsgToParentLWC(eventObject) {
+                // VfUnescapeEl false positive: lexOrigin and vfOrigin is controlled by server-side controller
+                // and does not accept user input
+                let eventData = { ...eventObject };
+                eventObject.uuid = uuid;
+                if (window.location.ancestorOrigins[0].includes('vf.force')) {
+                    window.parent.postMessage(eventObject, '{!vfOrigin}');
+                } else {
+                    window.parent.postMessage(eventObject, '{!lexOrigin}');
+                }
+            }
+            let graphicsLayer;
+            let graphicsLayerReadOnly;
+            let identityManager;
+            let spatialReference;
+            let view;
+            let sketch;
+            let sketchViewModel;
+            let graphic;
+            const FOOTER_NEW_ACTION = 'Footer with "New" Action';
+            const FOOTER_EDIT_BTN = 'Footer with Edit Button';
+            const NO_FOOTER = 'No Footer';
+            window.addEventListener('message', function (event) {
+                // Ensure event is coming from parent LWC
+                // VfUnescapeEl false positive: lexOrigin, vfOrigin is controlled by server-side controller
+                // and does not accept user input
+                if (
+                    event.source !== window.parent ||
+                    (event.origin !== '{!lexOrigin}' &&
+                        event.origin !== '{!vfOrigin}' &&
+                        event.origin !== '{!siteDomain}') ||
+                    event.data.uuid !== uuid
+                ) {
+                    return;
+                }
+                if (event.data.eventType === 'loadDrawings') {
+                    require([
+                        'esri/config',
+                        'esri/identity/IdentityManager',
+                        'esri/WebMap',
+                        'esri/views/MapView',
+                        'esri/widgets/BasemapGallery',
+                        'esri/widgets/LayerList',
+                        'esri/widgets/Expand',
+                        'esri/widgets/Search',
+                        'esri/widgets/Home',
+                        'esri/widgets/Locate',
+                        'esri/widgets/ScaleBar',
+                        'esri/widgets/Sketch',
+                        'esri/widgets/Sketch/SketchViewModel',
+                        'esri/Graphic',
+                        'esri/layers/GraphicsLayer',
+                        'esri/geometry/geometryEngine'
+                    ], function (
+                        EsriConfig,
+                        IdentityManager,
+                        WebMap,
+                        MapView,
+                        BasemapGallery,
+                        LayerList,
+                        Expand,
+                        Search,
+                        Home,
+                        Locate,
+                        ScaleBar,
+                        Sketch,
+                        SketchViewModel,
+                        Graphic,
+                        GraphicsLayer,
+                        geometryEngine
+                    ) {
+                        if (event.data.enterprisePortalUrl) {
+                            EsriConfig.portalUrl = event.data.enterprisePortalUrl;
+                        }
+                        identityManager = IdentityManager;
+                        identityManager.registerToken({
+                            server: event.data.url,
+                            token: event.data.token
+                        });
+
+                        let webmap = new WebMap({
+                            portalItem: {
+                                id: event.data.mapId
+                            }
+                        });
+
+                        view = new MapView({
+                            container: 'viewDiv',
+                            map: webmap
+                        });
+
+                        const basemapGallery = new BasemapGallery({
+                            view: view
+                        });
+
+                        const bgExpand = new Expand({ view: view, content: basemapGallery });
+
+                        graphicsLayer = new GraphicsLayer();
+                        webmap.add(graphicsLayer);
+
+                        graphicsLayerReadOnly = new GraphicsLayer();
+
+                        graphic = Graphic;
+
+                        const scalebar = new ScaleBar({
+                            view: view,
+                            unit: 'metric'
+                        });
+
+                        view.ui.add(scalebar, 'bottom-right');
+
+                        if (event.data.mapFooter === FOOTER_EDIT_BTN || event.data.isReadOnly) {
+                            sketch = new Sketch({
+                                layer: graphicsLayerReadOnly,
+                                view: view,
+                                creationMode: 'single'
+                            });
+
+                            sketchViewModel = new SketchViewModel({
+                                view: view,
+                                layer: graphicsLayer,
+                                updateOnGraphicClick: false
+                            });
+                        } else {
+                            sketch = new Sketch({
+                                layer: graphicsLayer,
+                                view: view,
+                                creationMode: 'single'
+                            });
+
+                            sketchViewModel = new SketchViewModel({
+                                view: view,
+                                layer: graphicsLayer
+                            });
+                        }
+
+                        let searchWidget = new Search({
+                            view: view,
+                            center: [-100, 35]
+                        });
+
+                        let homeWidget = new Home({
+                            view: view
+                        });
+
+                        let locateWidget = new Locate({
+                            view: view // Attaches the Locate button to the view
+                        });
+
+                        let layerList = new LayerList({
+                            view: view
+                        });
+
+                        view.when(function () {
+                            let hideLayer = view.map.layers.find(function (layer) {
+                                return layer.title === null;
+                            });
+                            hideLayer.listMode = 'hide';
+                        });
+
+                        let layerExpand = new Expand({ view: view, content: layerList });
+
+                        // adds the home widget to the top left corner of the MapView
+                        view.ui.add(homeWidget, 'top-left');
+
+                        // adds the locate widget to the top left corner of the MapView
+                        view.ui.add(locateWidget, 'top-left');
+
+                        // Add the search widget to the top left corner of the view next to other widgets
+                        view.ui.add(searchWidget, 'manual');
+
+                        if (event.data.loadDrawingTools) {
+                            view.ui.add(sketch, 'top-right');
+                        }
+                        view.ui.add(layerExpand, 'top-right');
+
+                        // Add the widget to the top-right corner of the view
+                        view.ui.add(bgExpand, {
+                            position: 'top-right'
+                        });
+
+                        sketch.on('create', function (event) {
+                            if (event.state === 'complete') {
+                                countShapes();
+                            }
+                        });
+                        sketch.on('delete', function (event) {
+                            if (event.state === 'complete') {
+                                countShapes();
+                            }
+                        });
+                        sketch.on('redo', function (event) {
+                            if (event.state === 'complete') {
+                                countShapes();
+                            }
+                        });
+                        sketch.on('undo', function (event) {
+                            if (event.state === 'complete') {
+                                countShapes();
+                            }
+                        });
+                        sketch.on('update', function (event) {
+                            if (event.state === 'complete') {
+                                countShapes();
+                            }
+                        });
+
+                        const measurements = document.getElementById('measurements');
+                        view.ui.add(measurements, 'manual');
+
+                        if (event.data.spatialReference) {
+                            spatialReference = JSON.parse(event.data.spatialReference);
+                            loadPolygon(spatialReference);
+                        }
+                    });
+                } else if (event.data.eventType === 'saveDrawings') {
+                    let jsonString = generateShapeJSON();
+                    let eventObject = {
+                        eventType: 'saveDrawings',
+                        eventData: jsonString,
+                        isEdit: false
+                    };
+                    sendMsgToParentLWC(eventObject);
+                } else if (event.data.eventType === 'updateToken') {
+                    identityManager.registerToken({
+                        server: event.data.url,
+                        token: event.data.token
+                    });
+                } else if (event.data.eventType === 'loadDrawingTools') {
+                    view.ui.add({
+                        component: sketch,
+                        position: 'top-right',
+                        index: 0
+                    });
+                    sketch.layer = graphicsLayer;
+                    sketchViewModel.updateOnGraphicClick = true;
+                } else if (event.data.eventType === 'cancelEdit') {
+                    view.ui.remove(sketch);
+                    sketch.layer = graphicsLayerReadOnly;
+                    sketchViewModel.updateOnGraphicClick = false;
+                    graphicsLayer.graphics.removeAll();
+                    if (event.data.spatialReference) {
+                        loadPolygon(JSON.parse(event.data.spatialReference));
+                    } else {
+                        countShapes();
+                    }
+                } else if (event.data.eventType === 'saveEdit') {
+                    let jsonString = generateShapeJSON();
+                    let eventObject = {
+                        eventType: 'saveDrawings',
+                        eventData: jsonString,
+                        isEdit: true
+                    };
+
+                    sendMsgToParentLWC(eventObject);
+                    view.ui.remove(sketch);
+                    sketch.layer = graphicsLayerReadOnly;
+                    sketchViewModel.updateOnGraphicClick = false;
+                }
+
+                function generateShapeJSON() {
+                    let graphics = graphicsLayer.graphics;
+                    let polygonData = graphics.map(function (polygon) {
+                        return polygon.geometry.toJSON();
+                    });
+
+                    return JSON.stringify(polygonData);
+                }
+
+                function countShapes(isOnLoad = false) {
+                    let jsonString = generateShapeJSON();
+                    let eventObject = {
+                        eventType: 'updateDrawings',
+                        shapeCount: graphicsLayer.graphics.length,
+                        jsonData: jsonString,
+                        isOnLoad: isOnLoad
+                    };
+                    sendMsgToParentLWC(eventObject);
+                }
+
+                function isValidJSONString(jsonString) {
+                    try {
+                        JSON.parse(jsonString);
+                        return true;
+                    } catch (error) {
+                        return false;
+                    }
+                }
+
+                function loadPolygon(spatialReference) {
+                    for (const obj of spatialReference) {
+                        let jsonObj;
+                        if (isValidJSONString(obj)) {
+                            jsonObj = JSON.parse(obj);
+                        } else {
+                            jsonObj = obj;
+                        }
+                        if (jsonObj.rings !== null && jsonObj.rings !== undefined) {
+                            const simplePolygonSymbol = {
+                                type: 'simple-fill',
+                                outline: {
+                                    color: [0, 0, 0],
+                                    width: 2
+                                },
+                                style: 'none'
+                            };
+                            let polygon = {
+                                type: 'polygon',
+                                spatialReference: {
+                                    latestWkid: jsonObj.spatialReference.latestWkid,
+                                    wkid: jsonObj.spatialReference.wkid
+                                },
+                                rings: jsonObj.rings
+                            };
+                            const polygonGraphic = new graphic({
+                                geometry: polygon,
+                                symbol: simplePolygonSymbol
+                            });
+
+                            sketchViewModel.layer.add(polygonGraphic);
+                        }
+                        if (
+                            (jsonObj.x !== null || jsonObj.y !== null) &&
+                            (jsonObj.x !== undefined || jsonObj.y !== undefined)
+                        ) {
+                            const pointSymbol = {
+                                type: 'simple-marker',
+                                style: 'circle',
+                                size: 6,
+                                color: [255, 255, 255],
+                                outline: {
+                                    color: [0, 0, 0],
+                                    width: 1
+                                }
+                            };
+                            let point = {
+                                type: 'point',
+                                spatialReference: {
+                                    latestWkid: jsonObj.spatialReference.latestWkid,
+                                    wkid: jsonObj.spatialReference.wkid
+                                },
+                                x: jsonObj.x,
+                                y: jsonObj.y
+                            };
+                            const pointGraphic = new graphic({
+                                geometry: point,
+                                symbol: pointSymbol
+                            });
+
+                            sketchViewModel.layer.add(pointGraphic);
+                        }
+                        if (jsonObj.paths !== null && jsonObj.paths !== undefined) {
+                            const polyLineSymbol = {
+                                type: 'simple-line',
+                                color: [0, 0, 0],
+                                width: 2
+                            };
+                            let polyline = {
+                                type: 'polyline',
+                                spatialReference: {
+                                    latestWkid: jsonObj.spatialReference.latestWkid,
+                                    wkid: jsonObj.spatialReference.wkid
+                                },
+                                paths: jsonObj.paths
+                            };
+                            const polylineGraphic = new graphic({
+                                geometry: polyline,
+                                symbol: polyLineSymbol
+                            });
+
+                            sketchViewModel.layer.add(polylineGraphic);
+                        }
+                    }
+                    countShapes(true);
+                }
+            });
+        </script>
+    </body>
+</apex:page>

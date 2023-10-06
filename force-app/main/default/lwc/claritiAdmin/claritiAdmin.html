@@ -1,0 +1,259 @@
+<template>
+    <div class="slds-var-m-horizontal_medium background">
+        <lightning-layout vertical-align="stretch">
+            <!-- Vertical Nav -->
+            <lightning-layout-item size="2" class="slds-border_right">
+                <lightning-vertical-navigation>
+                    <lightning-vertical-navigation-section label={labels.ArcGISSettings}>
+                        <lightning-vertical-navigation-item
+                            label={labels.Authorization}
+                        ></lightning-vertical-navigation-item>
+                    </lightning-vertical-navigation-section>
+                </lightning-vertical-navigation>
+            </lightning-layout-item>
+            <!-- Main Page Body -->
+            <lightning-layout-item size="10">
+                <div class="slds-var-p-around_medium">
+                    <template lwc:if={showSpinner}>
+                        <lightning-spinner alternative-text={labels.Loading}></lightning-spinner>
+                    </template>
+                    <h1 class="slds-var-m-bottom_medium slds-text-heading_small textBold">
+                        {labels.ArcGISAuthentication}
+                    </h1>
+                    <p class="slds-var-m-bottom_medium">{labels.ArcGISAuthenticationGetStarted}</p>
+                    <h1 class="slds-var-m-bottom_medium slds-text-heading_small textBold">
+                        {labels.ArcGISTypeSelect}
+                        <span class="helpText">
+                            <lightning-helptext
+                                content={labels.ArcGISTypeHelpText}
+                                class="slds-var-m-left_xx-small"
+                            ></lightning-helptext>
+                        </span>
+                    </h1>
+                    <lightning-radio-group
+                        label={labels.ArcGISTypeSelect}
+                        variant="label-hidden"
+                        options={arcGISTypeOptions}
+                        value={mapIntegrationMsg.arcGISType}
+                        onchange={handleArcGISTypeChange}
+                        disabled={readOnly}
+                    ></lightning-radio-group>
+                    <template lwc:if={showOnlineSetup}>
+                        <h1 class="slds-var-m-vertical_medium slds-text-heading_small textBold">
+                            {labels.ConnectionTypeSelect}
+                            <span class="helpText">
+                                <lightning-helptext
+                                    content={labels.ConnectionTypeHelpText}
+                                    class="slds-var-m-left_xx-small"
+                                ></lightning-helptext>
+                            </span>
+                        </h1>
+                        <lightning-radio-group
+                            label={labels.ConnectionTypeSelect}
+                            variant="label-hidden"
+                            options={connectionTypeOptions}
+                            value={mapIntegrationMsg.connectionType}
+                            onchange={handleConnectionTypeChange}
+                            disabled={readOnly}
+                        ></lightning-radio-group>
+                        <template lwc:if={showOnlineDetails}>
+                            <h1 class="slds-var-m-vertical_medium slds-text-heading_small textBold">
+                                {labels.OnlineDetailsProvideYourDetails}
+                            </h1>
+                            <template lwc:if={showApplicationDetails}>
+                                <p class="slds-var-m-bottom_medium">
+                                    <lightning-formatted-url
+                                        label={labels.OnlineDetailsDescriptionLink}
+                                        value="https://developers.arcgis.com/documentation/mapping-apis-and-services/security/tutorials/register-your-application/"
+                                    ></lightning-formatted-url>
+                                    &nbsp;{labels.OnlineDetailsDescriptionPart2}
+                                </p>
+                                <lightning-layout>
+                                    <lightning-layout-item size="6">
+                                        <lightning-input
+                                            required
+                                            type="text"
+                                            label={labels.EnterpriseURL}
+                                            value={mapIntegrationMsg.url}
+                                            data-name="url"
+                                            onchange={handleTextFieldChange}
+                                            min-length="1"
+                                            max-length="255"
+                                            disabled={readOnly}
+                                        ></lightning-input>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                                <lightning-layout vertical-align="start">
+                                    <lightning-layout-item size="3">
+                                        <lightning-input
+                                            required
+                                            type="password"
+                                            label={labels.OnlineDetailsClientID}
+                                            value={mapIntegrationMsg.clientId}
+                                            data-name="clientId"
+                                            onchange={handleTextFieldChange}
+                                            min-length="1"
+                                            max-length="255"
+                                            disabled={readOnly}
+                                        ></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="3" class="slds-var-p-left_medium">
+                                        <lightning-input
+                                            required
+                                            type="password"
+                                            label={labels.OnlineDetailsClientSecret}
+                                            value={mapIntegrationMsg.clientSecret}
+                                            data-name="clientSecret"
+                                            onchange={handleTextFieldChange}
+                                            min-length="1"
+                                            max-length="255"
+                                            disabled={readOnly}
+                                        ></lightning-input>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </template>
+
+                            <template lwc:if={showUserDetails}>
+                                <p class="slds-var-m-vertical_medium">{labels.OnlineDetailsUserHelp}</p>
+                                <lightning-layout>
+                                    <lightning-layout-item size="6">
+                                        <lightning-input
+                                            required
+                                            type="text"
+                                            label={labels.EnterpriseURL}
+                                            value={mapIntegrationMsg.url}
+                                            data-name="url"
+                                            onchange={handleTextFieldChange}
+                                            min-length="1"
+                                            max-length="255"
+                                            disabled={readOnly}
+                                        ></lightning-input>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                                <lightning-layout vertical-align="start">
+                                    <lightning-layout-item size="3">
+                                        <lightning-input
+                                            required
+                                            type="text"
+                                            label={labels.OnlineDetailsUsername}
+                                            value={mapIntegrationMsg.username}
+                                            data-name="username"
+                                            onchange={handleTextFieldChange}
+                                            min-length="1"
+                                            max-length="255"
+                                            disabled={readOnly}
+                                        ></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="3" class="slds-var-p-left_medium">
+                                        <lightning-input
+                                            required
+                                            type="password"
+                                            label={labels.OnlineDetailsPassword}
+                                            value={mapIntegrationMsg.password}
+                                            data-name="password"
+                                            onchange={handleTextFieldChange}
+                                            min-length="1"
+                                            max-length="255"
+                                            disabled={readOnly}
+                                        ></lightning-input>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </template>
+                        </template>
+                    </template>
+                    <template lwc:if={showEnterpriseSetup}>
+                        <h1 class="slds-var-m-vertical_medium slds-text-heading_small textBold">
+                            {labels.EnterpriseProvideYourDetails}
+                        </h1>
+                        <p class="slds-var-m-bottom_medium">{labels.OnlineDetailsUserHelp}</p>
+                        <lightning-layout>
+                            <lightning-layout-item size="6">
+                                <lightning-input
+                                    required
+                                    type="text"
+                                    label={labels.EnterprisePortalURL}
+                                    value={mapIntegrationMsg.enterprisePortalUrl}
+                                    data-name="enterprisePortalUrl"
+                                    onchange={handleTextFieldChange}
+                                    min-length="1"
+                                    max-length="255"
+                                    disabled={readOnly}
+                                ></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <lightning-layout>
+                            <lightning-layout-item size="6">
+                                <lightning-input
+                                    required
+                                    type="text"
+                                    label={labels.EnterpriseURL}
+                                    value={mapIntegrationMsg.url}
+                                    data-name="url"
+                                    onchange={handleTextFieldChange}
+                                    min-length="1"
+                                    max-length="255"
+                                    disabled={readOnly}
+                                ></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <lightning-layout>
+                            <lightning-layout-item size="3">
+                                <lightning-input
+                                    required
+                                    type="text"
+                                    label={labels.OnlineDetailsUsername}
+                                    value={mapIntegrationMsg.username}
+                                    data-name="username"
+                                    onchange={handleTextFieldChange}
+                                    min-length="1"
+                                    max-length="255"
+                                    disabled={readOnly}
+                                ></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="3" class="slds-var-p-left_medium">
+                                <lightning-input
+                                    required
+                                    type="password"
+                                    label={labels.OnlineDetailsPassword}
+                                    value={mapIntegrationMsg.password}
+                                    data-name="password"
+                                    onchange={handleTextFieldChange}
+                                    min-length="1"
+                                    max-length="255"
+                                    disabled={readOnly}
+                                ></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </template>
+                </div>
+                <div class="footer slds-border_top slds-var-m-top_medium slds-var-p-around_medium">
+                    <template lwc:if={readOnly}>
+                        <lightning-button
+                            label={labels.Edit}
+                            class="slds-text-body_regular"
+                            variant="neutral"
+                            onclick={handleEditClick}
+                        ></lightning-button>
+                    </template>
+                    <template lwc:else>
+                        <template lwc:if={showCancelBtn}>
+                            <lightning-button
+                                label={labels.Cancel}
+                                class="slds-var-m-right_small slds-text-body_regular"
+                                variant="neutral"
+                                onclick={handleCancelClick}
+                            ></lightning-button>
+                        </template>
+                        <lightning-button
+                            label={labels.Authorize}
+                            class="slds-text-body_regular"
+                            variant="brand"
+                            onclick={handleAuthorizeClick}
+                            disabled={disableAuthorizeBtn}
+                        ></lightning-button>
+                    </template>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

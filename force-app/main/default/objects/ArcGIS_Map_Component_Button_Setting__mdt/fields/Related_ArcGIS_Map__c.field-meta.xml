@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Related_ArcGIS_Map__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>Related ArcGIS Map</label>
+    <referenceTo>ArcGIS_Map_Configuration__mdt</referenceTo>
+    <relationshipLabel>ArcGIS Map Component Button Settings</relationshipLabel>
+    <relationshipName>ArcGIS_Map_Component_Button_Settings</relationshipName>
+    <required>false</required>
+    <type>MetadataRelationship</type>
+    <unique>false</unique>
+</CustomField>

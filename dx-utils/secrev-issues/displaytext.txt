@@ -1,0 +1,4 @@
+Avoid console log statements in production code
+Use css classes and do not include styles within HTML
+Avoid style tags and use css classes
+Absolute position is not recommended in LWC
